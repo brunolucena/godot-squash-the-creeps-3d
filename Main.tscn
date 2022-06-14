@@ -1,10 +1,9 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
 [ext_resource path="res://Mob.tscn" type="PackedScene" id=3]
-[ext_resource path="res://fonts/Montserrat-Medium.ttf" type="DynamicFontData" id=4]
-[ext_resource path="res://ScoreLabel.gd" type="Script" id=5]
+[ext_resource path="res://UserInterface.tscn" type="PackedScene" id=4]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 30, 1, 30 )
@@ -22,13 +21,6 @@ _data = {
 "points": PoolVector3Array( 0, 0, 0, 0, 0, 0, -14.0048, -3.05176e-05, -9.1379, 0, 0, 0, 0, 0, 0, 13.9055, -3.05176e-05, -9.1379, 0, 0, 0, 0, 0, 0, 14.1052, 7.62939e-05, 20.9218, 0, 0, 0, 0, 0, 0, -14.0038, 7.62939e-05, 20.8225, 0, 0, 0, 0, 0, 0, -14.0048, -3.05176e-05, -9.1379 ),
 "tilts": PoolRealArray( 0, 0, 0, 0, 0 )
 }
-
-[sub_resource type="DynamicFont" id=6]
-size = 22
-font_data = ExtResource( 4 )
-
-[sub_resource type="Theme" id=7]
-default_font = SubResource( 6 )
 
 [node name="Main" type="Node"]
 script = ExtResource( 2 )
@@ -92,35 +84,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.0048, -3.05176e-05, -9.137
 wait_time = 0.5
 autostart = true
 
-[node name="UserInterface" type="Control" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-theme = SubResource( 7 )
-
-[node name="ScoreLabel" type="Label" parent="UserInterface"]
-margin_left = 25.0
-margin_top = 19.0
-margin_right = 76.0
-margin_bottom = 33.0
-custom_colors/font_color = Color( 0.215686, 0.196078, 0.235294, 1 )
-text = "Score: 0"
-script = ExtResource( 5 )
-
-[node name="Retry" type="ColorRect" parent="UserInterface"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0, 0, 0, 0.470588 )
-
-[node name="Label" type="Label" parent="UserInterface/Retry"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -106.0
-margin_top = -14.0
-margin_right = 106.0
-margin_bottom = 14.0
-text = "Press enter to retry"
+[node name="UserInterface" parent="." instance=ExtResource( 4 )]
 
 [connection signal="hit" from="Player" to="." method="_on_Player_hit"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_MobTimer_timeout"]
