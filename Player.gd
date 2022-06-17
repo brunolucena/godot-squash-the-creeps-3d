@@ -56,7 +56,8 @@ func _physics_process(delta):
 		var collision = get_slide_collision(index)
 		# If we collide with a monster...
 		if collision.collider.is_in_group("mob"):
-			var mob = collision.collider
+			var mob := collision.collider as Mob
+			
 			# ...we check that we are hitting it from above
 			if Vector3.UP.dot(collision.normal) > 0.1:
 				# If so, we squash it and bounce
@@ -66,11 +67,11 @@ func _physics_process(delta):
 	$Pivot.rotation.x = PI / 6 * velocity.y / jump_impulse
 
 
-func _on_MobDetector_body_entered(_body):
+func _on_MobDetector_body_entered(_body) -> void:
 	die()
 
 
-func die():
+func die() -> void:
 	emit_signal("hit")
 	queue_free()
 

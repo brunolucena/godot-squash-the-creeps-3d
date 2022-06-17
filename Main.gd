@@ -6,7 +6,7 @@ func _ready():
 	$UserInterface/Retry.hide()
 
 
-func _on_MobTimer_timeout():
+func _on_MobTimer_timeout() -> void:
 	# Create a new instance of the Mob scene
 	var mob := preload("res://Mob.tscn").instance() as Mob
 	
@@ -25,7 +25,7 @@ func _on_MobTimer_timeout():
 	add_child(mob)
 
 
-func _on_Player_hit():
+func _on_Player_hit() -> void:
 	$MobTimer.stop()
 	$UserInterface/Retry.show()
 
