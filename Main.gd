@@ -1,15 +1,14 @@
 extends Node
 
-export (PackedScene) var mob_scene
-
 
 func _ready():
 	randomize()
 	$UserInterface/Retry.hide()
 
+
 func _on_MobTimer_timeout():
 	# Create a new instance of the Mob scene
-	var mob = mob_scene.instance()
+	var mob := preload("res://Mob.tscn").instance() as Mob
 	
 	# Choose a random location on the SpawnPath
 	# We store the reference to the SpawnLocation node
@@ -30,7 +29,10 @@ func _on_Player_hit():
 	$MobTimer.stop()
 	$UserInterface/Retry.show()
 
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept") and $UserInterface/Retry.visible:
 		# This restarts the current scene
 		get_tree().reload_current_scene()
+
+

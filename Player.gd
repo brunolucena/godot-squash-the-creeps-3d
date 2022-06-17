@@ -1,3 +1,4 @@
+class_name Player
 extends KinematicBody
 
 # Emitted when the player was hit by a mob
@@ -15,10 +16,11 @@ export var bounce_impulse = 16
 
 var velocity = Vector3.ZERO
 
+
 func _physics_process(delta):
 	# We create a local variable to store the input direction
 	var direction = Vector3.ZERO
-	
+
 	# We check for each move input and update the direction accordingly
 	if Input.is_action_pressed("move_right"):
 		direction.x += 1
@@ -30,17 +32,17 @@ func _physics_process(delta):
 		direction.z += 1
 	if Input.is_action_pressed("move_forward"):
 		direction.z -= 1
-		
+
 	if direction != Vector3.ZERO:
 		direction = direction.normalized()
 		$Pivot.look_at(translation + direction, Vector3.UP)
 		$AnimationPlayer.playback_speed = 4
 	else:
 		$AnimationPlayer.playback_speed = 1
-	
+
 	if is_on_floor() and Input.is_action_just_pressed("jump"):
 		velocity.y += jump_impulse
-		
+
 	# Ground velocity
 	velocity.x = direction.x * speed
 	velocity.z = direction.z * speed
@@ -48,7 +50,7 @@ func _physics_process(delta):
 	velocity.y -= fall_acceleration * delta
 	# Moving the character
 	velocity = move_and_slide(velocity, Vector3.UP)
-	
+
 	for index in range(get_slide_count()):
 		# We check every collision that occured this frame
 		var collision = get_slide_collision(index)
@@ -60,12 +62,15 @@ func _physics_process(delta):
 				# If so, we squash it and bounce
 				mob.squash()
 				velocity.y = bounce_impulse
-	
+
 	$Pivot.rotation.x = PI / 6 * velocity.y / jump_impulse
 
-func _on_MobDetector_body_entered(body):
+
+func _on_MobDetector_body_entered(_body):
 	die()
+
 
 func die():
 	emit_signal("hit")
 	queue_free()
+
